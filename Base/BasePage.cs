@@ -1,10 +1,5 @@
-﻿using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomationExercises.Base
 {
@@ -22,19 +17,35 @@ namespace AutomationExercises.Base
         // Método para esperar a que un elemento sea visible
         protected IWebElement WaitForElementVisible(By locator)
         {
-            return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
+            try {
+                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
+            }
+            catch(WebDriverTimeoutException)
+            {
+                throw new NoSuchElementException($"Element with locator {locator} not found.");
+            }
+            
         }
 
         protected IWebElement WaitForElementClickable(By locator)
         {
-            return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
+            try {
+                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
+            }
+            catch (WebDriverTimeoutException)
+            {
+                throw new NoSuchElementException($"Element with locator {locator} not found.");
+            }
+            
         }
 
         // Método para hacer clic en un elemento
         protected void Click(By locator)
         {
+
             WaitForElementVisible(locator);
             WaitForElementClickable(locator).Click();
+
         }
 
         // Método para escribir texto en un campo
@@ -62,6 +73,13 @@ namespace AutomationExercises.Base
             {
                 return false;
             }
+        }
+
+        //Metodo para seleccionar un elemento select por el texto visible
+        protected void SelectByVisibleText(By locator, string text)
+        {
+            var selectElement = new SelectElement(WaitForElementVisible(locator));
+            selectElement.SelectByText(text);
         }
     }
 }
