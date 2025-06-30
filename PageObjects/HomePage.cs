@@ -13,7 +13,7 @@ namespace AutomationExercises.PageObjects
         //Selectores
 
         private By signupLoginLink = By.XPath("//a[@href='/login']");
-        private By homePageImg = By.XPath("//img[@alt='Website for automation practice']");
+        private By homePageImg = By.XPath("//img[@alt='Website for automation practic']");
 
         public void goToHomePage() { 
             driver.Navigate().GoToUrl("https://automationexercise.com/");

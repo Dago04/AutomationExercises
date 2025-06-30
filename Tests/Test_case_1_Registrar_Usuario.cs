@@ -12,7 +12,7 @@ namespace AutomationExercises.Tests
         }
 
         [Test]
-        [Retry(2)]
+        [Retry(1)]
         [Category("Registrar_Usuario")]
         public void Registrar_Usuario()
         {
