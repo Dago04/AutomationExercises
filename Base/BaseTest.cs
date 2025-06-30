@@ -11,21 +11,34 @@ using AutomationExercises.Drivers;
 
 namespace AutomationExercises.Base
 {
-    public class BaseTest
+    public class    BaseTest
     {
         protected IWebDriver driver;
         protected static ExtentReports extent;
-        protected ExtentTest test;
+        protected ExtentTest extentTest;
+        protected string reportTestPage = "";
+
+        public BaseTest(string pageContext)
+        {
+            this.reportTestPage = pageContext;
+        }
 
         [OneTimeSetUp]
         public void SetUpReporter() {
 
-            // Directorio para el reporte
-            var dir = TestContext.CurrentContext.WorkDirectory;
-            var reportPath = Path.Combine(dir, "Reports", "TestReport.html");
 
-            // Crear carpeta Reports si no existe
-            Directory.CreateDirectory(Path.GetDirectoryName(reportPath));
+            string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            // Definir la ruta donde se generará el reporte
+            string projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            string reportDirectory = Path.Combine(projectRoot, "Reportes");
+
+            // Verifica si la carpeta `reports` existe, si no, la crea
+            if (!Directory.Exists(reportDirectory))
+            {
+                Directory.CreateDirectory(reportDirectory);
+            }
+
+            string reportPath = Path.Combine(reportDirectory, $"{timestamp}_{reportTestPage}");
 
             // Inicializar ExtentSparkReporter
             var sparkReporter = new ExtentSparkReporter(reportPath);
@@ -48,8 +61,6 @@ namespace AutomationExercises.Base
           
             driver = WebDriverFactory.CreateDriver();
 
-            // Crear test ExtentReports con el nombre del test actual
-            test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
         }
 
         [TearDown]
@@ -62,7 +73,7 @@ namespace AutomationExercises.Base
             if (status == NUnit.Framework.Interfaces.TestStatus.Failed)
             {
                 // Crear carpeta para screenshots
-                var screenshotDir = Path.Combine(TestContext.CurrentContext.WorkDirectory, "Reports", "Screenshots");
+                var screenshotDir = Path.Combine(TestContext.CurrentContext.WorkDirectory, "Reportes", "Screenshots");
                 Directory.CreateDirectory(screenshotDir);
 
                 var screenshotPath = Path.Combine(screenshotDir, TestContext.CurrentContext.Test.Name + ".png");
@@ -72,28 +83,28 @@ namespace AutomationExercises.Base
                 screenshot.SaveAsFile(screenshotPath);
 
                 // Agregar información al reporte
-                test.Fail("Test failed");
-                test.AddScreenCaptureFromPath(screenshotPath);
-                test.Fail(errorMessage);
-                test.Fail(stacktrace);
+                extentTest.Fail("Test failed");
+                extentTest.AddScreenCaptureFromPath(screenshotPath);
+                extentTest.Fail(errorMessage);
+                extentTest.Fail(stacktrace);
             }
             else if (status == NUnit.Framework.Interfaces.TestStatus.Passed)
             {
-                test.Pass("Test passed");
+                extentTest.Pass("Test passed");
             }
             else
             {
-                test.Skip("Test skipped");
+                extentTest.Skip("Test skipped");
             }
 
             // Cerrar navegador
-            driver.Quit();
             driver.Close();
+            driver.Quit();
 
         }
 
         [OneTimeTearDown]
-        public void EndReport+()
+        public void EndReport()
         {
             // Escribir y cerrar reporte
             extent.Flush();
