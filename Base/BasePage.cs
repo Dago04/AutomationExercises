@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using AventStack.ExtentReports;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
 namespace AutomationExercises.Base
@@ -7,22 +8,25 @@ namespace AutomationExercises.Base
     {
         protected IWebDriver driver;
         protected WebDriverWait wait;
+        protected ExtentTest extentTest;
 
-        public BasePage(IWebDriver driver)
+        public BasePage(IWebDriver driver, ExtentTest test)
         {
             this.driver = driver;
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            this.extentTest = test;
         }
 
         // Método para esperar a que un elemento sea visible
         protected IWebElement WaitForElementVisible(By locator)
         {
             try {
+                extentTest.Log(Status.Info, $"Esperando que el elemento sea visible: {locator}");
                 return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
             }
-            catch(WebDriverTimeoutException)
+            catch(WebDriverTimeoutException ex)
             {
-                throw new NoSuchElementException($"Element with locator {locator} not found.");
+                throw new NoSuchElementException($"Elemento con locator {locator} no se encontró. Detalles: {ex.Message}");
             }
             
         }
@@ -30,11 +34,13 @@ namespace AutomationExercises.Base
         protected IWebElement WaitForElementClickable(By locator)
         {
             try {
+
+                extentTest.Log(Status.Info, $"Esperando que el elemento sea clickable: {locator}");
                 return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
             }
-            catch (WebDriverTimeoutException)
+            catch (WebDriverTimeoutException ex)
             {
-                throw new NoSuchElementException($"Element with locator {locator} not found.");
+                throw new NoSuchElementException($"Elemento con locator {locator} no se encontró. Detalles: {ex.Message}");
             }
             
         }

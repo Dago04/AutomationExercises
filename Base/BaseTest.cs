@@ -45,8 +45,8 @@ namespace AutomationExercises.Base
             var sparkReporter = new ExtentSparkReporter(reportPath);
 
             // Configurar el nombre del reporte y el título del documento
-            sparkReporter.Config.ReportName = "Web Automation Results";
-            sparkReporter.Config.DocumentTitle = "Test Results";
+            sparkReporter.Config.ReportName = "Resultados de automatización web";
+            sparkReporter.Config.DocumentTitle = "Resultado de pruebas";
 
             // Crear instancia de ExtentReports y agregar el reporter
             extent = new ExtentReports();
@@ -90,11 +90,11 @@ namespace AutomationExercises.Base
             }
             else if (status == NUnit.Framework.Interfaces.TestStatus.Passed)
             {
-                extentTest.Pass("Test passed");
+                extentTest.Pass("Prueba Exitosa!");
             }
             else
             {
-                extentTest.Skip("Test skipped");
+                extentTest.Skip("Prueba Saltada!");
             }
 
             // Cerrar navegador

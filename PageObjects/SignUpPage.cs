@@ -1,4 +1,5 @@
 ﻿using AutomationExercises.Base;
+using AventStack.ExtentReports;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace AutomationExercises.PageObjects
 {
     public class SignUpPage :BasePage
     {
-        public SignUpPage(IWebDriver driver) : base(driver)
+        public SignUpPage(IWebDriver driver, ExtentTest extentTest) : base(driver, extentTest)
         {
 
         }

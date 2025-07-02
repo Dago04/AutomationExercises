@@ -12,16 +12,16 @@ namespace AutomationExercises.Tests
         }
 
         [Test]
-        [Retry(1)]
+        [Retry(2)]
         [Category("Registrar_Usuario")]
         public void Registrar_Usuario()
         {
             extentTest = extent.CreateTest("Test case #1 Registrar_Usuario: Validar el registro de un nuevo usuario de manera correcta");
             try
             {
-                HomePage homePage = new HomePage(driver);
-                SignUpPage signUpPage = new SignUpPage(driver);
-                AccountInformationPage accountInformationPage = new AccountInformationPage(driver);
+                HomePage homePage = new HomePage(driver, extentTest);
+                SignUpPage signUpPage = new SignUpPage(driver, extentTest);
+                AccountInformationPage accountInformationPage = new AccountInformationPage(driver, extentTest);
 
                 //1. Launch browser
                 //2. Navigate to url 'http://automationexercise.com'
@@ -49,6 +49,35 @@ namespace AutomationExercises.Tests
                 //9. Fill details: Title, Name, Email, Password, Date of birth
                 accountInformationPage.fillAccountInformation("12345", "4", "April", "2021");
 
+                //10. Select checkbox 'Sign up for our newsletter!'
+                accountInformationPage.clickOnNewsletterCheckbox();
+
+                //11. Select checkbox 'Receive special offers from our partners!'
+                accountInformationPage.clickOnSpecialOffersCheckbox();
+
+                //12. Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number
+                accountInformationPage.fillAddressInformation("QA", "Automation", "QA Company", "123 QA Street", "Suite 100", "United States", "California", "Los Angeles", "90001", "1234567890");
+
+                //13. Click 'Create Account button'
+                accountInformationPage.clickOnCreateAccountButton();
+
+                //14. Verify that 'ACCOUNT CREATED!' is visible
+                Assert.That(accountInformationPage.isAccountCreatedLabelVisible(), Is.True);
+                extentTest.Log(Status.Pass, "Se valida que el texto 'ACCOUNT CREATED!' es visible");
+
+                //15. Click 'Continue' button
+                accountInformationPage.clickOnContinueButton();
+
+                //16. Verify that 'Logged in as username' is visible
+                Assert.That(homePage.isLoggedUserLabelVisible(), Is.True);
+                extentTest.Log(Status.Pass, $"Se valida que el texto 'Logged in as username' es visible");
+
+                //17. Click 'Delete Account' button
+                homePage.clickOnDeleteAccountButton();
+
+                //18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
+                Assert.That(accountInformationPage.isAccountDeletedLabelVisible(), Is.True);
+                extentTest.Log(Status.Pass, "Se valida que el texto 'ACCOUNT DELETED!' es visible");
             }
             catch (Exception ex)
             {
