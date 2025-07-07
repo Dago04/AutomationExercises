@@ -1,6 +1,7 @@
 ﻿using AutomationExercises.Base;
 using AutomationExercises.PageObjects;
 using AventStack.ExtentReports;
+using static AutomationExercises.Data.Utils.TestDataConfig;
 
 namespace AutomationExercises.Tests
 {
@@ -28,7 +29,7 @@ namespace AutomationExercises.Tests
                 homePage.goToHomePage();
 
                 //3. Verify that home page is visible successfully
-                Assert.That(homePage.getHomeURL(), Is.EqualTo("https://automationexercise.com/"));
+                Assert.That(homePage.getHomeURL(), Is.EqualTo(Url));
                 extentTest.Log(Status.Pass, $"Se valida correctamente la url de la página {homePage.getHomeURL()}");
 
                 //4. Click on 'Signup / Login' button
@@ -40,14 +41,14 @@ namespace AutomationExercises.Tests
 
                 //6. Enter name and email address
                 //7. Click 'Signup' button
-                signUpPage.registerUser("pruebaQA", "pruebaQA@gmail.com");
+                signUpPage.registerUser(Username, Email);
 
                 //8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
                 Assert.That(accountInformationPage.isAccountInformationLabelVisible(), Is.True);
                 extentTest.Log(Status.Pass, "Se valida que el texto 'ENTER ACCOUNT INFORMATION' es visible");
 
                 //9. Fill details: Title, Name, Email, Password, Date of birth
-                accountInformationPage.fillAccountInformation("12345", "4", "April", "2021");
+                accountInformationPage.fillAccountInformation(Password, Day, Month, Year);
 
                 //10. Select checkbox 'Sign up for our newsletter!'
                 accountInformationPage.clickOnNewsletterCheckbox();
@@ -56,7 +57,7 @@ namespace AutomationExercises.Tests
                 accountInformationPage.clickOnSpecialOffersCheckbox();
 
                 //12. Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number
-                accountInformationPage.fillAddressInformation("QA", "Automation", "QA Company", "123 QA Street", "Suite 100", "United States", "California", "Los Angeles", "90001", "1234567890");
+                accountInformationPage.fillAddressInformation(FirstName, LastName, Company, Address1, Address2, Country, State, City, Zipcode, MobileNumber);
 
                 //13. Click 'Create Account button'
                 accountInformationPage.clickOnCreateAccountButton();

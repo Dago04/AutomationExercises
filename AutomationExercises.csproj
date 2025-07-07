@@ -33,4 +33,8 @@
     <Folder Include="Reportes\Screenshots\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AutomationExercises.Data\AutomationExercises.Data.csproj" />
+  </ItemGroup>
+
 </Project>
