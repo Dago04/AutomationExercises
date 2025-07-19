@@ -19,7 +19,7 @@ namespace AutomationExercises.Drivers
                 options.AddArgument("--no-sandbox"); // importante en entornos CI
                 options.AddArgument("--window-size=1920,1080");
             }
-
+            // Ruta relativa al ejecutable del driver
             IWebDriver driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
