@@ -59,8 +59,8 @@ namespace AutomationExercises.Base
         [SetUp]
         public void Setup()
         {
-          
-            driver = WebDriverFactory.CreateDriver();
+            bool headless = Environment.GetEnvironmentVariable("CI") == "true";
+            driver = WebDriverFactory.CreateDriver(headless);
 
         }
 

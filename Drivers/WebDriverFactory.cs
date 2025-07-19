@@ -13,9 +13,10 @@ namespace AutomationExercises.Drivers
             ChromeOptions options = new ChromeOptions();
 
             if (headless)
-            { 
+            {
                 options.AddArgument("--headless");
                 options.AddArgument("--disable-gpu");
+                options.AddArgument("--no-sandbox"); // importante en entornos CI
                 options.AddArgument("--window-size=1920,1080");
             }
 
