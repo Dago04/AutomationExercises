@@ -6,7 +6,7 @@ namespace AutomationExercises.PageObjects
 {
     public class HomePage : BasePage
     {
-        public HomePage(IWebDriver driver, ExtentTest extentTest) : base(driver, extentTest)
+        public HomePage(IWebDriver driver) : base(driver)
         {
 
         }
@@ -15,6 +15,7 @@ namespace AutomationExercises.PageObjects
 
         private By signupLoginLink = By.XPath("//a[@href='/login']");
         private By homePageImg = By.XPath("//img[@alt='Website for automation practice']");
+        private By homeLink = By.XPath("//header[@id='header']//ul/li[1]");
         private By lblLoggedUser = By.XPath("//ul[@class='nav navbar-nav']/li[last()]");
         private By btnDeleteAccount = By.XPath("//ul[@class='nav navbar-nav']/li/a[@href='/delete_account']");
 
@@ -42,6 +43,11 @@ namespace AutomationExercises.PageObjects
         public void clickOnDeleteAccountButton()
         {
             Click(btnDeleteAccount);
+        }
+
+        public bool isHomeIconVisible()
+        {
+            return IsElementVisible(homeLink);
         }
     }
 }

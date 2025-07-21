@@ -11,7 +11,7 @@ namespace AutomationExercises.PageObjects
 {
     public class AccountInformationPage : BasePage
     {
-        public AccountInformationPage(IWebDriver driver, ExtentTest extentTest) : base(driver, extentTest)
+        public AccountInformationPage(IWebDriver driver) : base(driver)
         {
 
         }

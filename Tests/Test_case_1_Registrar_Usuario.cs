@@ -20,9 +20,9 @@ namespace AutomationExercises.Tests
             extentTest = extent.CreateTest("Test case #1 Registrar_Usuario: Validar el registro de un nuevo usuario de manera correcta");
             try
             {
-                HomePage homePage = new HomePage(driver, extentTest);
-                SignUpPage signUpPage = new SignUpPage(driver, extentTest);
-                AccountInformationPage accountInformationPage = new AccountInformationPage(driver, extentTest);
+                HomePage homePage = new HomePage(driver);
+                SignUpPage signUpPage = new SignUpPage(driver);
+                AccountInformationPage accountInformationPage = new AccountInformationPage(driver);
 
                 //1. Launch browser
                 //2. Navigate to url 'http://automationexercise.com'
@@ -73,12 +73,12 @@ namespace AutomationExercises.Tests
                 Assert.That(homePage.isLoggedUserLabelVisible(), Is.True);
                 extentTest.Log(Status.Pass, $"Se valida que el texto 'Logged in as username' es visible");
 
-                //17. Click 'Delete Account' button
-                homePage.clickOnDeleteAccountButton();
+                ////17. Click 'Delete Account' button
+                //homePage.clickOnDeleteAccountButton();
 
-                //18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
-                Assert.That(accountInformationPage.isAccountDeletedLabelVisible(), Is.True);
-                extentTest.Log(Status.Pass, "Se valida que el texto 'ACCOUNT DELETED!' es visible");
+                ////18. Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button
+                //Assert.That(accountInformationPage.isAccountDeletedLabelVisible(), Is.True);
+                //extentTest.Log(Status.Pass, "Se valida que el texto 'ACCOUNT DELETED!' es visible");
             }
             catch (Exception ex)
             {

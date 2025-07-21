@@ -8,20 +8,17 @@ namespace AutomationExercises.Base
     {
         protected IWebDriver driver;
         protected WebDriverWait wait;
-        protected ExtentTest extentTest;
 
-        public BasePage(IWebDriver driver, ExtentTest test)
+        public BasePage(IWebDriver driver)
         {
             this.driver = driver;
             wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            this.extentTest = test;
         }
 
         // Método para esperar a que un elemento sea visible
         protected IWebElement WaitForElementVisible(By locator)
         {
             try {
-                extentTest.Log(Status.Info, $"Esperando que el elemento sea visible: {locator}");
                 return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
             }
             catch(WebDriverTimeoutException ex)
@@ -35,7 +32,6 @@ namespace AutomationExercises.Base
         {
             try {
 
-                extentTest.Log(Status.Info, $"Esperando que el elemento sea clickable: {locator}");
                 return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
             }
             catch (WebDriverTimeoutException ex)
